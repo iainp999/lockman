@@ -20,20 +20,20 @@ In this case, we assume that there is a class called `LockManager` which impleme
 
 #### General
 
-`
+```
 $lockManager = new LockManager();
 $lockable = new MyLockable();
 if ($lockManager->lock($lockable)) {
   // Some critical section code.
 }
 ...
-`
+```
 
 #### Locked Operation
 
 Contrived example, you could, for example, construct many of these objects in a service container.
 
-`
+```
 $lockManager = new LockManager();
 $lockedOperation = new LockedOperation($lockManager);
 $lockable = new MyLockable();
@@ -45,4 +45,4 @@ try {
 catch (Exception $ex) {
    // handle exception.
 }
-`
+```
