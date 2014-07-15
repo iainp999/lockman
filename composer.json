@@ -1,12 +1,12 @@
 {
     "name": "iainp999/lockman",
     "description": "Manager for locked operations",
+    "keywords": ["lock"],
     "minimum-stability": "stable",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Iain Potter",
-            "email": "no-spam@fore-front.co.uk"
+            "name": "Iain Potter"
         }
     ],
     "autoload": {
@@ -16,5 +16,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
