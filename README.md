@@ -46,3 +46,10 @@ catch (Exception $ex) {
    // handle exception.
 }
 ```
+
+One important thing to note here is that the $lockedOperation object can be re-used once created.  The actual lock is
+defined by the instance of `LockableInterface` that is injected when the operation is executed.
+
+The instance could be used, for example, inside a service container (such as the Symfony component) where the
+class that implements `LockManagerInterface` could be defined in configuration and automatically injected into a
+lock manager 'service'.
