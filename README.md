@@ -40,7 +40,7 @@ $lockable = new MyLockable();
 $myOperation = array('SomeClass', 'someMethod');
 // Execute the locked operation.
 try {
-   $myOperation->execute($myOperation, $lockable);
+   $lockedOperation->execute($myOperation, $lockable);
 }
 catch (Exception $ex) {
    // handle exception.
