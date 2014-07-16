@@ -5,8 +5,7 @@ A generic locking library for PHP that uses named locks.
 Locking is useful for controlling access to resources in a multi-process or distributed environment.
 
 The idea is that the actual locking mechanism can be implemented in any way you like, in order to fit your technology
-stack.  You would just need to implement `LockManagerInterface` for a particular technology (there is an example provided
-for the Drupal CMF).
+stack.  You would just need to implement `LockManagerInterface` for a particular technology (there are example lock managers provided for the local filesystem and the Drupal locking API).
 
 You may have some offline processing involving multiple processes and shared resources, where guarantees about exclusive
 access to resources are required.  In this case, you may want to look into using a library such as this, with an
