@@ -11,7 +11,7 @@ You may have some offline processing involving multiple processes and shared res
 access to resources are required.  In this case, you may want to look into using a library such as this, with an
 implementation of `LockManagerInterface` that is appropriate for you.
 
-See the examples in `lib/LockMan/Manager`.
+See the examples of `LockManagerInterface` implementations in `lib/LockMan/Manager`.
 
 ### Example Usage
 
