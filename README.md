@@ -30,7 +30,11 @@ if ($lockManager->lock($lockable)) {
 
 #### Locked Operation
 
-Contrived example, you could, for example, construct many of these objects in a service container.
+You don't have to use this class, it's simply provided as a convenience for operations that require a lock to be acquired during their execution.  An operation is any PHP callable.
+
+The current implementation does not support the acquisition of multiple locks prior to execution.  This may be supported in a future version.
+
+What follows is a contrived example, you could, for example, construct many of these objects in a service container ('contrived' in that you probably wouldn't create all of these objects inline, as in this example).
 
 ```
 $lockManager = new LockManager();
