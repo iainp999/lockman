@@ -2,7 +2,7 @@
 
 A generic locking library for PHP that uses named locks.
 
-Locking is useful for controlling access to resources in a distributed environment.
+Locking is useful for controlling access to resources in a multi-process or distributed environment.
 
 The idea is that the actual locking mechanism can be implemented in any way you like, in order to fit your technology
 stack.  You would just need to implement `LockManagerInterface` for a particular technology (there is an example provided
