@@ -30,7 +30,7 @@ if ($lockManager->lock($lockable)) {
 
 #### Locked Operation
 
-You don't have to use this class, it's simply provided as a convenience for operations that require a lock to be acquired during their execution.  An operation is any PHP callable.
+You don't have to use this class, it's simply provided as a convenience for operations that require a lock to be acquired prior to their execution.  The lock is released when the operation finishes; if an Exception occurs then the lock is released before the Exception is rethrown.  An operation is any PHP callable.
 
 The current implementation does not support the acquisition of multiple locks prior to execution.  This may be supported in a future version.
 
