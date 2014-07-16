@@ -2,9 +2,12 @@
 use LockMan\Operation\LockedOperation;
 
 require_once __DIR__ . "/classes/Foo.php";
+require_once __DIR__ . "/classes/MyLockable.php";
 
 /**
  * LockedOperation tests.
+ *
+ * @group lock
  */
 class LockedOperationTest extends PHPUnit_Framework_TestCase {
   /**

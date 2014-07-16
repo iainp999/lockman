@@ -3,6 +3,7 @@
     <testsuites>
         <testsuite name="LockMan tests">
             <directory>./tests</directory>
+            <group>lock</group>
         </testsuite>
     </testsuites>
 </phpunit>

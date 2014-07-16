@@ -4,6 +4,8 @@ require_once __DIR__ . "/classes/MyLockable.php";
 
 /**
  * Tests for the LockManager.
+ *
+ * @group lock
  */
 class LockManTest extends PHPUnit_Framework_TestCase {
 
