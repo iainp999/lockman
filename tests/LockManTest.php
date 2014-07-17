@@ -40,7 +40,7 @@ class LockManTest extends PHPUnit_Framework_TestCase {
 
     $this->assertTrue(self::$lockManager->release($lockable));
     $this->assertTrue(self::$lockManager->lock($lockable));
-    $this->assertTrue(self::$lockManager->release());
+    $this->assertTrue(self::$lockManager->release($lockable));
   }
 
   /**
