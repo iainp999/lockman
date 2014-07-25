@@ -6,7 +6,4 @@
             <group>lock</group>
         </testsuite>
     </testsuites>
-    <logging>
-        <log type="coverage-clover" target="./clover.xml"/>
-    </logging>
 </phpunit>

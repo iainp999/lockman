@@ -3,4 +3,9 @@ php:
   - 5.5
   - 5.4
 before_script: composer install
-script: phpunit --configuration phpunit-integration.dist.xml
+script:
+ - mkdir -p build/logs
+ - phpunit --configuration phpunit-integration.dist.xml --coverage-clover build/logs/clover.xml
+
+after_script:
+ - php vendor/bin/coveralls -v
