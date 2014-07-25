@@ -60,3 +60,4 @@ lock manager 'service'.
 ## Badges
 
 Travis CI : [![Build Status](https://travis-ci.org/iainp999/lockman.svg?branch=master)](https://travis-ci.org/iainp999/lockman)
+Coveralls : [![Coverage Status](https://coveralls.io/repos/iainp999/lockman/badge.png?branch=master)](https://coveralls.io/r/iainp999/lockman?branch=master)
