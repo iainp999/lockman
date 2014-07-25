@@ -56,3 +56,7 @@ defined by the instance of `LockableInterface` that is injected when the operati
 The instance could be used, for example, inside a service container (such as the Symfony component) where the
 class that implements `LockManagerInterface` could be defined in configuration and automatically injected into a
 lock manager 'service'.
+
+## Badges
+
+Travis CI : [![Build Status](https://travis-ci.org/iainp999/lockman.svg?branch=master)](https://travis-ci.org/iainp999/lockman)
