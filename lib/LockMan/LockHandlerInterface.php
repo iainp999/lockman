@@ -2,11 +2,11 @@
 namespace LockMan;
 
 /**
- * Manages locks.
+ * Handles locking.
  *
  * @package LockMan
  */
-interface LockManagerInterface {
+interface LockHandlerInterface {
 
   /**
    * Lock the supplied Lockable.

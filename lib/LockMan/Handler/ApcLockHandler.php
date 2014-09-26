@@ -1,15 +1,15 @@
 <?php
-namespace LockMan\Manager;
+namespace LockMan\Handler;
 
 use LockMan\LockableInterface;
-use LockMan\LockManagerInterface;
+use LockMan\LockHandlerInterface;
 
 /**
- * Lock manager that uses APC.
+ * Lock handler that uses APC.
  *
- * @package LockMan\Manager
+ * @package LockMan\Handler
  */
-class ApcLockManager implements LockManagerInterface {
+class ApcLockHandler implements LockHandlerInterface {
   /**
    * Lock the supplied Lockable.
    *

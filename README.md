@@ -5,24 +5,24 @@ A generic locking library for PHP that uses named locks.
 Locking is useful for controlling access to resources in a multi-process or distributed environment.
 
 The idea is that the actual locking mechanism can be implemented in any way you like, in order to fit your technology
-stack.  You would just need to implement `LockManagerInterface` for a particular technology (there are example lock managers provided for the local filesystem and the Drupal locking API).
+stack.  You would just need to implement `LockHandlerInterface` for a particular technology (there are example lock handlers provided for the local filesystem and the Drupal locking API).
 
 You may have some offline processing involving multiple processes and shared resources, where guarantees about exclusive
 access to resources are required.  In this case, you may want to look into using a library such as this, with an
-implementation of `LockManagerInterface` that is appropriate for you.
+implementation of `LockHandlerInterface` that is appropriate for you.
 
-See the examples of `LockManagerInterface` implementations in `lib/LockMan/Manager`.
+See the examples of `LockHandlerInterface` implementations in `lib/LockMan/Handler`.
 
 ### Example Usage
 
-In this case, we assume that there is a class called `LockManager` which implements `LockManagerInterface`.
+In this case, we assume that there is a class called `LockHandler` which implements `LockHandlerInterface`.
 
 #### General
 
 ```
-$lockManager = new LockManager();
+$lockHandler = new LockHandler();
 $lockable = new MyLockable();
-if ($lockManager->lock($lockable)) {
+if ($lockHandler->lock($lockable)) {
   // Some critical section code.
 }
 ...
@@ -37,8 +37,8 @@ The current implementation does not support the acquisition of multiple locks pr
 What follows is a contrived example, you could, for example, construct many of these objects in a service container ('contrived' in that you probably wouldn't create all of these objects inline, as in this example).
 
 ```
-$lockManager = new LockManager();
-$lockedOperation = new LockedOperation($lockManager);
+$lockHandler = new LockHandler();
+$lockedOperation = new LockedOperation($lockHandler);
 $lockable = new MyLockable();
 $myOperation = array('SomeClass', 'someMethod');
 // Execute the locked operation.
@@ -54,8 +54,8 @@ One important thing to note here is that the $lockedOperation object can be re-u
 defined by the instance of `LockableInterface` that is injected when the operation is executed.
 
 The instance could be used, for example, inside a service container (such as the Symfony component) where the
-class that implements `LockManagerInterface` could be defined in configuration and automatically injected into a
-lock manager 'service'.
+class that implements `LockHandlerInterface` could be defined in configuration and automatically injected into a
+lock handler 'service'.
 
 ## Badges
 

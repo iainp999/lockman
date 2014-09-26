@@ -1,15 +1,15 @@
 <?php
-namespace LockMan\Manager;
+namespace LockMan\Handler;
 
 use LockMan\LockableInterface;
-use LockMan\LockManagerInterface;
+use LockMan\LockHandlerInterface;
 
 /**
  * Uses the filesystem to manage locks.
  *
- * @package LockMan\Manager
+ * @package LockMan\Handler
  */
-class FileLockManager implements LockManagerInterface {
+class FileLockHandler implements LockHandlerInterface {
 
   protected $directory = '/tmp/';
   protected $suffix = '.lock';

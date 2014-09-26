@@ -18,13 +18,13 @@ interface LockedOperationInterface {
   public function execute(callable $operation, LockableInterface $lockable, $locktime = 3600);
 
   /**
-   * @param LockManagerInterface $manager
+   * @param LockHandlerInterface $handler
    * @return mixed
    */
-  public function setLockManager(LockManagerInterface $manager);
+  public function setLockHandler(LockHandlerInterface $handler);
 
   /**
    * @return mixed
    */
-  public function getLockManager();
+  public function getLockHandler();
 } 

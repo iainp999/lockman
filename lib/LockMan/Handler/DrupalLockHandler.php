@@ -1,15 +1,15 @@
 <?php
-namespace LockMan\Manager;
+namespace LockMan\Handler;
 
 use LockMan\LockableInterface;
-use LockMan\LockManagerInterface;
+use LockMan\LockHandlerInterface;
 
 /**
- * LockManager that uses the Drupal locking API.
+ * Lock handler that uses the Drupal locking API.
  *
- * @package LockMan\Manager
+ * @package LockMan\Handler
  */
-class DrupalLockManager implements LockManagerInterface {
+class DrupalLockHandler implements LockHandlerInterface {
 
   /**
    * Attempt to lock the supplied Lockable.

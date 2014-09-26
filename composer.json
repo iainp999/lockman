@@ -1,6 +1,6 @@
 {
     "name": "iainp999/lockman",
-    "description": "Manager for locked operations",
+    "description": "Handlers for locked operations",
     "keywords": ["lock"],
     "minimum-stability": "stable",
     "license": "MIT",

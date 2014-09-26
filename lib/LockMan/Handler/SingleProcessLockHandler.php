@@ -1,17 +1,17 @@
 <?php
-namespace LockMan\Manager;
+namespace LockMan\Handler;
 
-use LockMan\LockManagerInterface;
+use LockMan\LockHandlerInterface;
 use LockMan\LockableInterface;
 
 /**
- * A lock manager that operates within the context of a single process.
+ * A lock handler that operates within the context of a single process.
  *
  * Mainly used for testing, but maybe there's another use-case.
  *
- * @package LockMan\Manager
+ * @package LockMan\Handler
  */
-class SingleProcessLockManager implements LockManagerInterface {
+class SingleProcessLockHandler implements LockHandlerInterface {
 
   protected $locks = array();
 

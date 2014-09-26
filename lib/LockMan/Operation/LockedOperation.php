@@ -3,7 +3,7 @@ namespace LockMan\Operation;
 
 use LockMan\LockableInterface;
 use LockMan\LockedOperationInterface;
-use LockMan\LockManagerInterface;
+use LockMan\LockHandlerInterface;
 
 /**
  *
@@ -12,17 +12,17 @@ use LockMan\LockManagerInterface;
 class LockedOperation implements LockedOperationInterface {
 
   /**
-   * @type LockManagerInterface
+   * @type LockHandlerInterface
    */
-  protected $lockManager = NULL;
+  protected $lockHandler = NULL;
 
   /**
-   * Construct a new instance of this class, injecting the lock manager.
+   * Construct a new instance of this class, injecting the lock handler.
    *
-   * @param LockManagerInterface $lockManager
+   * @param LockHandlerInterface $lockHandler
    */
-  public function __construct(LockManagerInterface $lockManager) {
-    $this->setLockManager($lockManager);
+  public function __construct(LockHandlerInterface $lockHandler) {
+    $this->setLockHandler($lockHandler);
   }
 
   /**
@@ -38,7 +38,7 @@ class LockedOperation implements LockedOperationInterface {
    *  Should return the result of the callable.
    */
   public function execute(callable $operation, LockableInterface $lockable, $locktime = 3600) {
-    if (!$this->lockManager->lock($lockable, $locktime)) {
+    if (!$this->lockHandler->lock($lockable, $locktime)) {
       throw new \InvalidArgumentException();
     }
 
@@ -52,7 +52,7 @@ class LockedOperation implements LockedOperationInterface {
       // the current lockable is released.
     }
 
-    if (!$this->lockManager->release($lockable)) {
+    if (!$this->lockHandler->release($lockable)) {
       // could not release lock.
       //TODO determine how to report this since the operation may have still succeeded.
     }
@@ -66,23 +66,23 @@ class LockedOperation implements LockedOperationInterface {
   }
 
   /**
-   * Set the lock manager to be used during this operation.
+   * Set the lock handler to be used during this operation.
    *
-   * @param LockManagerInterface $manager
+   * @param LockHandlerInterface $handler
    * @return mixed
    */
-  public function setLockManager(LockManagerInterface $manager) {
-    $this->lockManager = $manager;
+  public function setLockHandler(LockHandlerInterface $handler) {
+    $this->lockHandler = $handler;
     return $this;
   }
 
   /**
-   * Get the lock manager that is currently in use.
+   * Get the lock handler that is currently in use.
    *
    * @return mixed
    */
-  public function getLockManager() {
-    return $this->lockManager;
+  public function getLockHandler() {
+    return $this->lockHandler;
   }
 
 }

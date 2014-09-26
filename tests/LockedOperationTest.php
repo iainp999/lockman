@@ -11,12 +11,12 @@ require_once __DIR__ . "/classes/MyLockable.php";
  */
 class LockedOperationTest extends PHPUnit_Framework_TestCase {
   /**
-   * @type $lockManager \LockMan\LockManagerInterface
+   * @type $lockHandler \LockMan\LockHandlerInterface
    */
-  protected static $lockManager;
+  protected static $lockHandler;
 
   public static function setUpBeforeClass() {
-    self::$lockManager = new \LockMan\Manager\SingleProcessLockManager();
+    self::$lockHandler = new \LockMan\Handler\SingleProcessLockHandler();
     parent::setUpBeforeClass();
   }
 
@@ -24,14 +24,14 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
    * Test that a locked operation can execute as expected.
    */
   public function testLockedOperation() {
-    $lockedOperation = new LockedOperation(self::$lockManager);
+    $lockedOperation = new LockedOperation(self::$lockHandler);
     $lockable = new MyLockable();
     $op = function() {
       return TRUE;
     };
     $result = $lockedOperation->execute($op, $lockable);
 
-    $this->assertTrue(self::$lockManager->canLock($lockable));
+    $this->assertTrue(self::$lockHandler->canLock($lockable));
     $this->assertTrue($result);
   }
 
@@ -39,7 +39,7 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
    *
    */
   public function testLockedOperationException() {
-    $lockedOperation = new LockedOperation(self::$lockManager);
+    $lockedOperation = new LockedOperation(self::$lockHandler);
     $lockable = new MyLockable();
     $op = function() {
       throw new Exception("Something went wrong.");
@@ -55,7 +55,7 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
     }
 
     $this->assertTrue(isset($ex));
-    $this->assertTrue(self::$lockManager->canLock($lockable));
+    $this->assertTrue(self::$lockHandler->canLock($lockable));
     $this->assertFalse($result);
   }
 
@@ -63,7 +63,7 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
    * Test the locked operation works for method calls.
    */
   public function testLockedMethod() {
-    $lockedOperation = new LockedOperation(self::$lockManager);
+    $lockedOperation = new LockedOperation(self::$lockHandler);
     $lockable = new MyLockable();
     $foo = new Foo();
 

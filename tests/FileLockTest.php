@@ -14,33 +14,33 @@ require_once __DIR__ . "/classes/MyLockable.php";
 class FileLockTest extends PHPUnit_Framework_TestCase {
 
   /**
-   * @type $lockManager \LockMan\Manager\FileLockManager
+   * @type $lockHandler \LockMan\Handler\FileLockHandler
    */
-  protected $lockManager = NULL;
+  protected $lockHandler = NULL;
 
   protected $lockable = NULL;
 
   public function setUp() {
-    $this->lockManager = new \LockMan\Manager\FileLockManager('/tmp/');
+    $this->lockHandler = new \LockMan\Handler\FileLockHandler('/tmp/');
     $this->lockable = new MyLockable();
     parent::setUp();
   }
 
   public function testLock() {
-    $this->assertTrue($this->lockManager->lock($this->lockable));
+    $this->assertTrue($this->lockHandler->lock($this->lockable));
   }
 
   /**
    * @depends testLock
    */
   public function testCanLock() {
-    $this->assertTrue($this->lockManager->canLock($this->lockable));
+    $this->assertTrue($this->lockHandler->canLock($this->lockable));
   }
 
   /**
    * @depends testLock
    */
   public function testCanRelease() {
-    $this->assertTrue($this->lockManager->release($this->lockable));
+    $this->assertTrue($this->lockHandler->release($this->lockable));
   }
 }
