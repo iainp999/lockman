@@ -1,5 +1,6 @@
 <?php
 namespace LockMan;
+use LockMan\Exception\LockReleaseException;
 
 /**
  * Handles locking.
@@ -32,6 +33,7 @@ interface LockHandlerInterface {
    *  The lockable to release.  If NULL, release all locks.
    * @return boolean
    *  TRUE if the lockable was released, FALSE otherwise.
+   *
    */
   public function release(LockableInterface $lockable = NULL);
 

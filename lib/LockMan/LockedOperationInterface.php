@@ -14,6 +14,7 @@ interface LockedOperationInterface {
    * @param int $locktime
    * @return mixed
    *  Should return the result of the callable.
+   * @throws \LockReleaseException
    */
   public function execute(callable $operation, LockableInterface $lockable, $locktime = 3600);
 

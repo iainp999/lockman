@@ -3,6 +3,7 @@ use LockMan\Operation\LockedOperation;
 
 require_once __DIR__ . "/classes/Foo.php";
 require_once __DIR__ . "/classes/MyLockable.php";
+require_once __DIR__ . "/classes/ExceptionLockHandler.php";
 
 /**
  * LockedOperation tests.
@@ -78,5 +79,27 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
 
     $this->assertTrue($result);
     $this->assertFalse(isset($ex));
+  }
+
+  /**
+   * Test the case where a lock could not be released.
+   */
+  public function testException() {
+    $lockedOperation = new LockedOperation(new ExceptionLockHandler());
+    $lockable = new MyLockable();
+    $op = function() {
+      return TRUE;
+    };
+
+    $result = FALSE;
+
+    try {
+      $result = $lockedOperation->execute($op, $lockable);
+    }
+    catch(\LockMan\Exception\LockReleaseException $e) {
+      $result = $e->getResult();
+    }
+
+    $this->assertTrue($result);
   }
 } 

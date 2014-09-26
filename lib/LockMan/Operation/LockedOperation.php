@@ -53,8 +53,9 @@ class LockedOperation implements LockedOperationInterface {
     }
 
     if (!$this->lockHandler->release($lockable)) {
-      // could not release lock.
-      //TODO determine how to report this since the operation may have still succeeded.
+      // Could not release lock.  Throw an exception that includes
+      // the result but which indicates that the lock release failed.
+      $operation_exception = new \LockMan\Exception\LockReleaseException($result);
     }
 
     // If an exception was thrown, rethrow now after the lock was released.
