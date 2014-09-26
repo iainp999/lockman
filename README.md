@@ -19,6 +19,8 @@ In this case, we assume that there is a class called `LockManager` which impleme
 
 #### General
 
+N.B. in reality, I would recommend using some configurable service/DI container for creating your objects.
+
 ```
 $lockManager = new LockManager();
 $lockable = new MyLockable();
