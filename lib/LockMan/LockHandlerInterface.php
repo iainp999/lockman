@@ -1,6 +1,6 @@
 <?php
 namespace LockMan;
-use LockMan\Exception\LockReleaseException;
+use LockMan\Operation\LockReleaseException;
 
 /**
  * Handles locking.
@@ -14,7 +14,7 @@ interface LockHandlerInterface {
    *
    * @param LockableInterface $lockable
    * @param int $timeout
-   * @return mixed
+   * @return boolean
    */
   public function lock(LockableInterface $lockable, $timeout = 3600);
 
@@ -22,7 +22,7 @@ interface LockHandlerInterface {
    * Test if the Lockable can be locked.
    *
    * @param LockableInterface $lockable
-   * @return mixed
+   * @return boolean
    */
   public function canLock(LockableInterface $lockable);
 

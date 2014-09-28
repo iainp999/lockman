@@ -1,5 +1,7 @@
 <?php
 
+use LockMan\LockableInterface;
+
 class ExceptionLockHandler implements \LockMan\LockHandlerInterface {
   /**
    * Lock the supplied Lockable.
@@ -8,7 +10,7 @@ class ExceptionLockHandler implements \LockMan\LockHandlerInterface {
    * @param int $timeout
    * @return mixed
    */
-  public function lock(\LockMan\LockableInterface $lockable, $timeout = 3600) {
+  public function lock(LockableInterface $lockable, $timeout = 3600) {
     return TRUE;
   }
 
@@ -16,9 +18,9 @@ class ExceptionLockHandler implements \LockMan\LockHandlerInterface {
    * Test if the Lockable can be locked.
    *
    * @param \LockMan\LockableInterface $lockable
-   * @return mixed
+   * @return boolean
    */
-  public function canLock(\LockMan\LockableInterface $lockable) {
+  public function canLock(LockableInterface $lockable) {
     return TRUE;
   }
 
@@ -31,7 +33,7 @@ class ExceptionLockHandler implements \LockMan\LockHandlerInterface {
    *  TRUE if the lockable was released, FALSE otherwise.
    *
    */
-  public function release(\LockMan\LockableInterface $lockable = NULL) {
+  public function release(LockableInterface $lockable = NULL) {
     return FALSE;
   }
 

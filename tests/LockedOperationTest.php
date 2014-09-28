@@ -83,23 +83,39 @@ class LockedOperationTest extends PHPUnit_Framework_TestCase {
 
   /**
    * Test the case where a lock could not be released.
+   *
+   * Check that the result was returned and that
    */
   public function testException() {
-    $lockedOperation = new LockedOperation(new ExceptionLockHandler());
+    $handler = new ExceptionLockHandler();
+    $lockedOperation = new LockedOperation($handler);
     $lockable = new MyLockable();
     $op = function() {
       return TRUE;
     };
 
     $result = FALSE;
+    $threw = FALSE;
 
     try {
-      $result = $lockedOperation->execute($op, $lockable);
+      $lockedOperation->execute($op, $lockable);
     }
-    catch(\LockMan\Exception\LockReleaseException $e) {
-      $result = $e->getResult();
+    catch(\LockMan\Operation\LockReleaseException $e) {
+      $threw = TRUE;
+      $operation = $e->getLockedOperation();
     }
 
-    $this->assertTrue($result);
+    $this->assertTrue($threw);
+    $this->assertTrue($operation->getResult());
+    $this->assertTrue($operation->isFinished());
   }
-} 
+
+  public function testModifiedResult() {
+    $lockedOperation = new LockedOperation(self::$lockHandler, 'changed_result');
+    $op = function() {
+      //TODO think about this use case.
+    };
+
+    $result = $lockedOperation->execute($op, new MyLockable());
+  }
+}

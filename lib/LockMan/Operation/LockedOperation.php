@@ -6,10 +6,29 @@ use LockMan\LockedOperationInterface;
 use LockMan\LockHandlerInterface;
 
 /**
+ * An operation that requires a lock to be acquired on an associated 'LockableInterface'
+ * prior to execution.  The lock will be released after execution.
+ *
+ * The operation is a PHP Callable.
  *
  * @package LockMan\Operation
  */
 class LockedOperation implements LockedOperationInterface {
+
+  /**
+   * Whether the operation has executed.
+   *
+   * @type bool
+   */
+  private $finished = FALSE;
+
+  /**
+   * The result of the operation, if it executed.  The initial value of this
+   * field can be modified by the caller on construction.
+   *
+   * @type mixed
+   */
+  private $result = NULL;
 
   /**
    * @type LockHandlerInterface
@@ -19,10 +38,15 @@ class LockedOperation implements LockedOperationInterface {
   /**
    * Construct a new instance of this class, injecting the lock handler.
    *
+   * As a convenience, it is possible to set a default 'result' value at this
+   * point too, since the usual NULL might not be desirable.
+   *
    * @param LockHandlerInterface $lockHandler
+   * @param $default_result
    */
-  public function __construct(LockHandlerInterface $lockHandler) {
+  public function __construct(LockHandlerInterface $lockHandler, $default_result = NULL) {
     $this->setLockHandler($lockHandler);
+    $this->result = $default_result;
   }
 
   /**
@@ -42,20 +66,20 @@ class LockedOperation implements LockedOperationInterface {
       throw new \InvalidArgumentException();
     }
 
-    $result = NULL;
-
     try {
-      $result = $operation();
+      $this->result = $operation();
     }
     catch (\Exception $operation_exception) {
-      // Catch all sub-classes of Exception to be rethrown after
+      // Catch all sub-classes of Exception to be rethrown later, after
       // the current lockable is released.
     }
 
-    if (!$this->lockHandler->release($lockable)) {
+    $this->finished = TRUE;
+
+    if (!$this->releaseLockable($lockable)) {
       // Could not release lock.  Throw an exception that includes
       // the result but which indicates that the lock release failed.
-      $operation_exception = new \LockMan\Exception\LockReleaseException($result);
+      $operation_exception = new \LockMan\Operation\LockReleaseException($this);
     }
 
     // If an exception was thrown, rethrow now after the lock was released.
@@ -63,7 +87,17 @@ class LockedOperation implements LockedOperationInterface {
       throw $operation_exception;
     }
 
-    return $result;
+    return $this->result;
+  }
+
+  /**
+   * Release the lock on the LockableInterface.
+   *
+   * @param LockableInterface $lockable
+   * @return bool
+   */
+  protected function releaseLockable(LockableInterface $lockable) {
+    return $this->lockHandler->release($lockable);
   }
 
   /**
@@ -84,6 +118,26 @@ class LockedOperation implements LockedOperationInterface {
    */
   public function getLockHandler() {
     return $this->lockHandler;
+  }
+
+  /**
+   * @return null
+   */
+  public function getResult() {
+    return $this->result;
+  }
+
+  /**
+   * Check if the operation finished.
+   *
+   * For example, it could be possible that the operation executed, but a
+   * lock was unable to release.  In this case, it's handy to be able to check
+   * that the operation completed.
+   *
+   * @return boolean
+   */
+  public function isFinished() {
+    return $this->finished;
   }
 
 }
